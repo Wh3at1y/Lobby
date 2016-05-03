@@ -12,7 +12,7 @@ public class AppController
 				frame = new AppFrame(this);
 			}
 
-		private AppPanel getPanel()
+		public AppPanel getPanel()
 			{
 				return frame.getPanel();
 			}

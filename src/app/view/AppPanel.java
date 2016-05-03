@@ -9,13 +9,18 @@ public class AppPanel extends JPanel implements AllPanels
 		private SpringLayout layout;
 		
 		private AppLogin loginPanel;
+		private MainPanel mainPanel;
 		
 		public AppPanel(AppController controller)
-			{
+			{	
 				layout = new SpringLayout();
 				
-				loginPanel = new AppLogin();
+				loginPanel = new AppLogin(controller);
 				loginPanel.setPreferredSize(new Dimension(800,600));
+				
+				mainPanel = new MainPanel();
+				mainPanel.setPreferredSize(new Dimension(800,600));
+				mainPanel.setVisible(false);
 				
 				buildPanel();
 				buildPlacements();
@@ -25,6 +30,7 @@ public class AppPanel extends JPanel implements AllPanels
 		public void buildPanel()
 			{
 				setLayout(layout);
+				add(mainPanel);
 				add(loginPanel);
 			}
 
@@ -34,5 +40,15 @@ public class AppPanel extends JPanel implements AllPanels
 
 		public void buildPlacements()
 			{
+			}
+
+		public AppLogin getLoginPanel()
+			{
+				return loginPanel;
+			}
+
+		public MainPanel getMainPanel()
+			{
+				return mainPanel;
 			}
 	}

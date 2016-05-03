@@ -1,10 +1,15 @@
 package app.view;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
+import app.controller.AppController;
 
 public class AppLogin extends JPanel implements AllPanels
 	{
+		private AppController controller;
+
 		private SpringLayout layout;
 
 		private JLabel userNameLabel;
@@ -16,16 +21,18 @@ public class AppLogin extends JPanel implements AllPanels
 
 		private JButton loginButton;
 
-		public AppLogin()
+		public AppLogin(AppController controller)
 			{
+				setLook();
+				this.controller = controller;
 				layout = new SpringLayout();
 
 				userNameLabel = new JLabel("Enter User Name");
 				userNameLabel.setForeground(Color.WHITE);
-				
+
 				userPasswordLabel = new JLabel("Enter Password");
 				userPasswordLabel.setForeground(Color.WHITE);
-				
+
 				backgroundImage = new JLabel();
 				backgroundImage.setIcon(new ImageIcon(AppLogin.class.getResource("/app/view/background.png")));
 
@@ -52,8 +59,56 @@ public class AppLogin extends JPanel implements AllPanels
 
 		public void buildListeners()
 			{
+				loginButton.addActionListener(new ActionListener()
+					{
+						public void actionPerformed(ActionEvent clicked)
+							{
+								if (checkLogin() == true)
+									{
+										userNameLabel.setForeground(Color.RED);
+										userPasswordLabel.setForeground(Color.RED);
+										
+										setVisible(false);
+										controller.getPanel().getMainPanel().setVisible(true);
+									}
+							}
+					});
+
 			}
 
+		private boolean checkLogin()
+		{
+			boolean canLogin = true;
+			String userName = userNameField.getText();
+			String userPassword = userPasswordField.getText();
+			
+			if(userName.length() > 15)
+				{
+					userNameLabel.setForeground(Color.RED);
+					JOptionPane.showMessageDialog(null, "Username has too many characters! Must be below 15.");					
+					canLogin = false;
+				}
+			if(userName.length() < 5)
+				{
+					userNameLabel.setForeground(Color.RED);
+					JOptionPane.showMessageDialog(null, "Username has too few characters! Must be more than 5.");	
+					canLogin = false;
+				}
+			if(userPassword.length() > 15)
+				{
+					userPasswordLabel.setForeground(Color.RED);
+					JOptionPane.showMessageDialog(null, "Password has too many characters! Must be below 15.");					
+					canLogin = false;
+				}
+			if(userPassword.length() < 5)
+				{
+					userPasswordLabel.setForeground(Color.RED);
+					JOptionPane.showMessageDialog(null, "Password has too few characters! Must be more than 5.");	
+					canLogin = false;
+				}
+			return canLogin;
+		}
+		
 		public void buildPlacements()
 			{
 				layout.putConstraint(SpringLayout.WEST, loginButton, 200, SpringLayout.WEST, this);
