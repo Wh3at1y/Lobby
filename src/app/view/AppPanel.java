@@ -18,7 +18,7 @@ public class AppPanel extends JPanel implements AllPanels
 				loginPanel = new AppLogin(controller);
 				loginPanel.setPreferredSize(new Dimension(800,600));
 				
-				mainPanel = new MainPanel();
+				mainPanel = new MainPanel(controller);
 				mainPanel.setPreferredSize(new Dimension(800,600));
 				mainPanel.setVisible(false);
 				

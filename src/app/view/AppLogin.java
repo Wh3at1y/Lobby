@@ -1,8 +1,7 @@
 package app.view;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import javax.swing.*;
 import app.controller.AppController;
 
@@ -25,6 +24,7 @@ public class AppLogin extends JPanel implements AllPanels
 			{
 				setLook();
 				this.controller = controller;
+				this.setFocusable(true);
 				layout = new SpringLayout();
 
 				userNameLabel = new JLabel("Enter User Name");
@@ -59,56 +59,125 @@ public class AppLogin extends JPanel implements AllPanels
 
 		public void buildListeners()
 			{
+				
+				userPasswordField.addKeyListener(new KeyListener()
+				{
+					@Override
+					public void keyPressed(KeyEvent pressed)
+						{
+							enterButton();	
+						}
+
+					public void keyReleased(KeyEvent e)
+						{
+							// TODO Auto-generated method stub
+							
+						}
+
+					@Override
+					public void keyTyped(KeyEvent e)
+						{
+							// TODO Auto-generated method stub
+							
+						}
+				});
+				
+				userNameField.addKeyListener(new KeyListener()
+					{
+						@Override
+						public void keyPressed(KeyEvent pressed)
+							{
+								enterButton();	
+							}
+
+						public void keyReleased(KeyEvent e)
+							{
+								// TODO Auto-generated method stub
+								
+							}
+
+						@Override
+						public void keyTyped(KeyEvent e)
+							{
+								// TODO Auto-generated method stub
+								
+							}
+					});
+				
 				loginButton.addActionListener(new ActionListener()
 					{
 						public void actionPerformed(ActionEvent clicked)
 							{
-								if (checkLogin() == true)
-									{
-										userNameLabel.setForeground(Color.RED);
-										userPasswordLabel.setForeground(Color.RED);
-										
-										setVisible(false);
-										controller.getPanel().getMainPanel().setVisible(true);
-									}
+								enterButton();
+							}
+					});
+				
+				this.addKeyListener(new KeyListener()
+					{
+						@Override
+						public void keyPressed(KeyEvent pressed)
+							{
+								enterButton();
+							}
+
+						public void keyTyped(KeyEvent e)
+							{
+								// TODO Auto-generated method stub
+								
+							}
+
+						public void keyReleased(KeyEvent e)
+							{
+								// TODO Auto-generated method stub
+								
 							}
 					});
 
 			}
+		
+		private void enterButton()
+		{
+			if (checkLogin() == true)
+				{
+					setVisible(false);
+					controller.getPanel().getMainPanel().setVisible(true);
+					controller.getPanel().getMainPanel().setUserName(userNameField.getText());
+				}
+		}
 
 		private boolean checkLogin()
-		{
-			boolean canLogin = true;
-			String userName = userNameField.getText();
-			String userPassword = userPasswordField.getText();
-			
-			if(userName.length() > 15)
-				{
-					userNameLabel.setForeground(Color.RED);
-					JOptionPane.showMessageDialog(null, "Username has too many characters! Must be below 15.");					
-					canLogin = false;
-				}
-			if(userName.length() < 5)
-				{
-					userNameLabel.setForeground(Color.RED);
-					JOptionPane.showMessageDialog(null, "Username has too few characters! Must be more than 5.");	
-					canLogin = false;
-				}
-			if(userPassword.length() > 15)
-				{
-					userPasswordLabel.setForeground(Color.RED);
-					JOptionPane.showMessageDialog(null, "Password has too many characters! Must be below 15.");					
-					canLogin = false;
-				}
-			if(userPassword.length() < 5)
-				{
-					userPasswordLabel.setForeground(Color.RED);
-					JOptionPane.showMessageDialog(null, "Password has too few characters! Must be more than 5.");	
-					canLogin = false;
-				}
-			return canLogin;
-		}
-		
+			{
+				boolean canLogin = true;
+				String userName = userNameField.getText();
+				int userPassword = userPasswordField.getText().length();
+
+				if (userName.length() > 15)
+					{
+						userNameLabel.setForeground(Color.RED);
+						JOptionPane.showMessageDialog(null, "Username has too many characters! Must be below 15.");
+						canLogin = false;
+					}
+				else if (userName.length() < 5)
+					{
+						userNameLabel.setForeground(Color.RED);
+						JOptionPane.showMessageDialog(null, "Username has too few characters! Must be more than 5.");
+						canLogin = false;
+					}
+				if (userPassword > 15)
+					{
+						userPasswordLabel.setForeground(Color.RED);
+						JOptionPane.showMessageDialog(null, "Password has too many characters! Must be below 15.");
+						canLogin = false;
+					}
+				if (userPassword < 5)
+					{
+						userPasswordLabel.setForeground(Color.RED);
+						JOptionPane.showMessageDialog(null, "Password has too few characters! Must be more than 5.");
+						canLogin = false;
+					}
+				return canLogin;
+			}
+
 		public void buildPlacements()
 			{
 				layout.putConstraint(SpringLayout.WEST, loginButton, 200, SpringLayout.WEST, this);
