@@ -9,31 +9,20 @@ public interface AllPanels
 		void buildListeners();
 		void buildPlacements();
 		
+		/*
+		 * Gets the default system look and feel
+		 */
 		default void setLook()
 		{
 			try
-				{
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				}
+				{	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());	}
 			catch (ClassNotFoundException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				{	e.printStackTrace();		}
 			catch (InstantiationException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				{	e.printStackTrace();		}
 			catch (IllegalAccessException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				{	e.printStackTrace();		}
 			catch (UnsupportedLookAndFeelException e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				{	e.printStackTrace();		}
 		}
 	}

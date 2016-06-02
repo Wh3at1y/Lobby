@@ -1,11 +1,30 @@
 package app.model;
 
+import app.controller.AppController;
+
 public class Account
 	{
-		private String userName;
+		/*
+		 * Declaration Section
+		 */
+		private AppController controller;
 
-		public Account(String userName)
+		
+		/*
+		 * Constructor
+		 */
+		public Account(AppController controller)
 			{
-				this.userName = userName;
+				this.controller = controller;
+			}
+
+		
+		/**
+		 * Updates the user name on the Main Panel with parameter
+		 * @param userName
+		 */
+		public void updateUserName(String userName)
+			{
+				controller.getPanel().getMainPanel().setUserName(userName);
 			}
 	}

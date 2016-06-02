@@ -1,9 +1,11 @@
 package app.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.*;
 import javax.swing.*;
 import app.controller.AppController;
+import app.model.Account;
 
 public class AppLogin extends JPanel implements AllPanels
 	{
@@ -20,9 +22,14 @@ public class AppLogin extends JPanel implements AllPanels
 
 		private JButton loginButton;
 
+		/**
+		 * Constructor
+		 * @param controller : AppController
+		 */
 		public AppLogin(AppController controller)
 			{
 				setLook();
+				
 				this.controller = controller;
 				this.setFocusable(true);
 				layout = new SpringLayout();
@@ -59,51 +66,9 @@ public class AppLogin extends JPanel implements AllPanels
 
 		public void buildListeners()
 			{
-				
-				userPasswordField.addKeyListener(new KeyListener()
-				{
-					@Override
-					public void keyPressed(KeyEvent pressed)
-						{
-							enterButton();	
-						}
+				addEnterListeners(userPasswordField);
+				addEnterListeners(userNameField);
 
-					public void keyReleased(KeyEvent e)
-						{
-							// TODO Auto-generated method stub
-							
-						}
-
-					@Override
-					public void keyTyped(KeyEvent e)
-						{
-							// TODO Auto-generated method stub
-							
-						}
-				});
-				
-				userNameField.addKeyListener(new KeyListener()
-					{
-						@Override
-						public void keyPressed(KeyEvent pressed)
-							{
-								enterButton();	
-							}
-
-						public void keyReleased(KeyEvent e)
-							{
-								// TODO Auto-generated method stub
-								
-							}
-
-						@Override
-						public void keyTyped(KeyEvent e)
-							{
-								// TODO Auto-generated method stub
-								
-							}
-					});
-				
 				loginButton.addActionListener(new ActionListener()
 					{
 						public void actionPerformed(ActionEvent clicked)
@@ -111,39 +76,44 @@ public class AppLogin extends JPanel implements AllPanels
 								enterButton();
 							}
 					});
-				
+
 				this.addKeyListener(new KeyListener()
 					{
-						@Override
 						public void keyPressed(KeyEvent pressed)
 							{
 								enterButton();
 							}
 
-						public void keyTyped(KeyEvent e)
-							{
-								// TODO Auto-generated method stub
-								
-							}
-
-						public void keyReleased(KeyEvent e)
-							{
-								// TODO Auto-generated method stub
-								
-							}
+						public void keyTyped(KeyEvent e){}
+						public void keyReleased(KeyEvent e){}
 					});
 
 			}
+
+		private void addEnterListeners(Component component)
+		{
+			component.addKeyListener(new KeyListener()
+				{
+					public void keyPressed(KeyEvent pressed)
+						{
+							if (pressed.getKeyCode() == KeyEvent.VK_ENTER)
+								enterButton();
+						}
+
+					public void keyTyped(KeyEvent e){}
+					public void keyReleased(KeyEvent e){}
+				});
+		}
 		
 		private void enterButton()
-		{
-			if (checkLogin() == true)
-				{
-					setVisible(false);
-					controller.getPanel().getMainPanel().setVisible(true);
-					controller.getPanel().getMainPanel().setUserName(userNameField.getText());
-				}
-		}
+			{
+				if (checkLogin() == true)
+					{
+						setVisible(false);
+						controller.getPanel().getMainPanel().setVisible(true);
+						controller.getAccount().updateUserName(this.userNameField.getText());
+					}
+			}
 
 		private boolean checkLogin()
 			{

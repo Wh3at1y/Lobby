@@ -5,8 +5,15 @@ import app.controller.AppController;
 
 public class AppFrame extends JFrame
 	{
+		/*
+		 * Declaration Section
+		 */
 		private AppPanel panel;
 		
+		
+		/*
+		 * Constructor
+		 */
 		public AppFrame(AppController controller)
 		{
 			panel = new AppPanel(controller);
@@ -14,6 +21,10 @@ public class AppFrame extends JFrame
 			setupFrame();
 		}
 		
+		
+		/*
+		 * Sets the properties of the window & frame
+		 */
 		private void setupFrame()
 		{
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,6 +35,10 @@ public class AppFrame extends JFrame
 			this.setVisible(true);
 		}
 		
+		
+		/*
+		 * Getters and Setters
+		 */
 		public AppPanel getPanel()
 		{
 			return panel;

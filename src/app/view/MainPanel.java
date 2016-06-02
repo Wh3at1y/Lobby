@@ -8,21 +8,23 @@ import app.controller.AppController;
 
 public class MainPanel extends JPanel implements AllPanels
 	{
-		
+		private AppController controller;
+
 		private SpringLayout layout;
 
 		private JLabel helloUser;
-		
+
 		private JLabel backgroundImage;
 
 		public MainPanel(AppController controller)
 			{
+				this.controller = controller;
 				layout = new SpringLayout();
 
 				helloUser = new JLabel();
 				helloUser.setForeground(Color.WHITE);
 				helloUser.setFont(new Font("Avenir", Font.PLAIN, 50));
-				
+
 				backgroundImage = new JLabel();
 				backgroundImage.setIcon(new ImageIcon(MainPanel.class.getResource("/app/view/mainbackground.png")));
 
@@ -43,10 +45,10 @@ public class MainPanel extends JPanel implements AllPanels
 			}
 
 		public void setUserName(String userName)
-		{
-			helloUser.setText("Welcome, " + userName + ".");
-		}
-		
+			{
+				helloUser.setText("Welcome, " + userName + ".");
+			}
+
 		public void buildPlacements()
 			{
 			}
